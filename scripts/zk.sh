@@ -24,11 +24,11 @@ echo ${ZK_ADDRS[@]}
 
 set -e
 
-curl -L http://apache.website-solution.net/zookeeper/zookeeper-3.4.12/zookeeper-3.4.12.tar.gz -o zookeeper-3.4.12.tar.gz
-tar zxf zookeeper-3.4.12.tar.gz
+curl -L https://www.apache.org/dyn/closer.lua/zookeeper/zookeeper-3.6.1/apache-zookeeper-3.6.1-bin.tar.gz -o apache-zookeeper-3.6.1-bin.tar.gz
+tar zxf apache-zookeeper-3.6.1-bin.tar.gz
 mkdir -p $ZK_HOME
 echo $ZK_ID>$ZK_HOME/myid
-mv zookeeper-3.4.12/* $ZK_HOME
+mv apache-zookeeper-3.6.1-bin/* $ZK_HOME
 echo "tickTime=2000" > $ZK_HOME/conf/zoo.cfg
 echo "initLimit=10" >> $ZK_HOME/conf/zoo.cfg 
 echo "syncLimit=5" >> $ZK_HOME/conf/zoo.cfg
@@ -39,7 +39,8 @@ echo "autopurge.purgeInterval=24" >> $ZK_HOME/conf/zoo.cfg
 for ((index=0;index<$ZK_ADDRS_SIZE;index++))
 do
     id=$[$index+1]
-    echo "server.$id=${ZK_ADDRS[index]}:2888:3888" >> $ZK_HOME/conf/zoo.cfg 
+    host=${ZK_ADDRS[index]} && host=(${host//:/ })
+    echo "server.$id=${host[0]}:2888:3888" >> $ZK_HOME/conf/zoo.cfg 
 done
 
 # install supervisor

@@ -30,12 +30,12 @@ echo "jdk not exist down jdk8"
 fi
 
 # download kafka
-curl "http://apache.stu.edu.tw/kafka/2.1.0/kafka_2.11-2.1.0.tgz"  -o kafka_2.11-2.1.0.tgz
-tar zxf kafka_2.11-2.1.0.tgz
+curl "https://mirrors.sonic.net/apache/kafka/2.6.0/kafka_2.12-2.6.0.tgz"  -o kafka_2.12-2.6.0.tgz
+tar zxf kafka_2.12-2.6.0.tgz
 # install kafka
 mkdir -p $KAFKA_HOME
 mkdir -p $KAFKA_DATA
-mv kafka_2.11-2.1.0/* $KAFKA_HOME
+mv kafka_2.12-2.6.0/* $KAFKA_HOME
 # kafka config
 echo "broker.id=$BROKER_ID">$KAFKA_CONF
 echo "host.name=$CURRENT_ADDR">>$KAFKA_CONF
@@ -81,6 +81,6 @@ stdout_logfile_maxbytes=100MB
 stdout_logfile_backups=5
 stderr_logfile_maxbytes=100MB
 stderr_logfile_backups=5
-environment=JAVA_HOME=$JDK_HOME,JRE_HOME='$JDK_HOME/jre',KAFKA_HEAP_OPTS='-Xmx6g -Xms6g -XX:MetaspaceSize=96m -XX:G1HeapRegionSize=16M -XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80'">$_KAFKA_SUPERVISOR
+environment=JAVA_HOME=$JDK_HOME,JRE_HOME='$JDK_HOME/jre',KAFKA_HEAP_OPTS='-Xmx6g -Xms6g -XX:MetaspaceSize=96m -XX:G1HeapRegionSize=16M -XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80'">$KAFKA_SUPERVISOR
 
 supervisorctl update
